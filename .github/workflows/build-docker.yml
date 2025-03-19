@@ -29,7 +29,9 @@ jobs:
         run: |
           echo "curdir: $PWD"
           echo "ctx: ${{ github.repositoryUrl }}#${{ github.ref }}#${{ github.sha }}"
-          find .
+          echo "$(ls -l)"
+          echo "$(ls -l app)"
+          echo "$(find .)"
       - name: Build and Push Image to docker registry with kaniko
         run: |
           cat <<EOF > /kaniko/.docker/config.json
