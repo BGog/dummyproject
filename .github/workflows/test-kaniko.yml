@@ -45,4 +45,4 @@ jobs:
         env: 
           GIT_USERNAME: ${{ github.actor }}
           GIT_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-          DOCKER_IMAGE_NAME: "<docker-username>/nginx"
+          DOCKER_IMAGE_NAME: "bgog/dummyproject"
