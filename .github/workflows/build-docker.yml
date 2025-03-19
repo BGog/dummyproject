@@ -38,7 +38,7 @@ jobs:
           EOF
 
           /kaniko/executor --dockerfile="./app/Dockerfile" \
-            --context="${{ github.repositoryUrl }}#${{ github.ref }}#${{ github.sha }}"  \
+            --context="./app" \
             --destination="hagrid.lab.printf.org/$DOCKER_IMAGE_NAME:$(echo ${GITHUB_SHA} | head  -c 7)" \
             ${{ env.KANIKO_CACHE_ARGS }} \
             --push-retry 5 
@@ -48,3 +48,4 @@ jobs:
           DOCKER_IMAGE_NAME: "bgog/dummyproject"
 
 # --destination="hagrid.lab.printf.org/$DOCKER_IMAGE_NAME:$(echo ${GITHUB_SHA} | head  -c 7)" \
+# --context="${{ github.repositoryUrl }}#${{ github.ref }}#${{ github.sha }}"  \
