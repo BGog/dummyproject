@@ -25,23 +25,6 @@ jobs:
       packages: write # to push to GHCR, omit for other container registry. https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions#publishing-a-package-using-an-action
 
     steps:
-      - name: Generate version
-        id: version
-        run: |
-          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-            # Get latest tag or start at 0.1.0 if no tags exist
-            LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.1.0")
-            # Remove 'v' prefix for version calculations
-            VERSION=${LATEST_TAG#v}
-            # Increment patch version
-            IFS='.' read -r major minor patch <<< "$VERSION"
-            NEW_VERSION="v$major.$minor.$((patch + 1))"
-            echo "tag=${NEW_VERSION}" >> $GITHUB_OUTPUT
-          else
-            # For other branches, use short SHA
-            echo "tag=$(echo ${GITHUB_SHA} | head -c 7)" >> $GITHUB_OUTPUT
-          fi
-
       - name: Build and Push Image to docker registry with kaniko
         run: |
           cat <<EOF > /kaniko/.docker/config.json
@@ -56,10 +39,12 @@ jobs:
 
           /kaniko/executor --dockerfile="./app/Dockerfile" \
             --context="${{ github.repositoryUrl }}#${{ github.ref }}#${{ github.sha }}"  \
-            --destination="hagrid.lab.printf.org/$DOCKER_IMAGE_NAME:${{ steps.version.outputs.tag }}" \
+            --destination="hagrid.lab.printf.org/$DOCKER_IMAGE_NAME:$(echo ${GITHUB_SHA} | head  -c 7)" \
             ${{ env.KANIKO_CACHE_ARGS }} \
             --push-retry 5 
         env: 
           GIT_USERNAME: ${{ github.actor }}
           GIT_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
           DOCKER_IMAGE_NAME: "bgog/dummyproject"
+
+# --destination="hagrid.lab.printf.org/$DOCKER_IMAGE_NAME:$(echo ${GITHUB_SHA} | head  -c 7)" \
