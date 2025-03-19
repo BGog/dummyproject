@@ -39,7 +39,7 @@ jobs:
 
           /kaniko/executor --dockerfile="./app/Dockerfile" \
             --context="${{ github.repositoryUrl }}#${{ github.ref }}#${{ github.sha }}"  \
-            --destination="$DOCKER_IMAGE_NAME:$(echo ${GITHUB_SHA} | head  -c 7)" \
+            --destination="hagrid.lab.printf.org/$DOCKER_IMAGE_NAME:$(echo ${GITHUB_SHA} | head  -c 7)" \
             ${{ env.KANIKO_CACHE_ARGS }} \
             --push-retry 5 
         env: 
