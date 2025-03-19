@@ -25,6 +25,12 @@ jobs:
       packages: write # to push to GHCR, omit for other container registry. https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions#publishing-a-package-using-an-action
 
     steps:
+      - name: Look at files
+        run: |
+          echo "curdir: $PWD"
+          echo "ctx: ${{ github.repositoryUrl }}#${{ github.ref }}#${{ github.sha }}"
+          ls "${{ github.repositoryUrl }}#${{ github.ref }}#${{ github.sha }}"
+          find .
       - name: Build and Push Image to docker registry with kaniko
         run: |
           cat <<EOF > /kaniko/.docker/config.json
@@ -38,7 +44,7 @@ jobs:
           EOF
 
           /kaniko/executor --dockerfile="./app/Dockerfile" \
-            --context="./app" \
+            --context="${{ github.repositoryUrl }}#${{ github.ref }}#${{ github.sha }}"  \
             --destination="hagrid.lab.printf.org/$DOCKER_IMAGE_NAME:$(echo ${GITHUB_SHA} | head  -c 7)" \
             ${{ env.KANIKO_CACHE_ARGS }} \
             --push-retry 5 
