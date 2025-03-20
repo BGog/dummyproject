@@ -4,7 +4,7 @@ name: Build with kaniko
 
 on:
   push:
-    branches: [ main ]
+    branches: [ fred ]
     # branches: [ "*" ]
     # paths:
     #   - "app/**"
