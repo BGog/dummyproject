@@ -48,19 +48,18 @@ jobs:
     needs: [test]
     runs-on: k8s-test-runner
     container:
-      image: gcr.io/kaniko-project/executor:v1.23.2-debug # the kaniko image
+      image: gcr.io/kaniko-project/executor:debug #v1.23.2-debug # the kaniko image
     permissions:
       contents: read # read the repository
       #packages: write # to push to GHCR, omit for other container registry. https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions#publishing-a-package-using-an-action
 
     steps:
-      # - name: Look at files
-      #   working-directory: ./app
-      #   run: |
-      #     echo "curdir: $PWD"
-      #     echo "ctx: ${{ github.repositoryUrl }}#${{ github.ref }}#${{ github.sha }}"
-      #     echo "$(ls -l)"
-      #     echo "$(find .)"
+      - name: Look at files
+        working-directory: ./app
+        run: |
+          echo "curdir: $PWD"
+          echo "$(ls -l)"
+          echo "$(find /__e/node20)"
       - uses: actions/checkout@v4
       
       # - name: short commit sha
