@@ -21,7 +21,7 @@ jobs:
     name: "Build and Push Image"
     runs-on: k8s-test-runner
     container:
-      image: gcr.io/kaniko-project/executor:v1.8.0 # the kaniko image
+      image: gcr.io/kaniko-project/executor:v1.23.2 # the kaniko image
     permissions:
       contents: read # read the repository
       packages: write # to push to GHCR, omit for other container registry. https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions#publishing-a-package-using-an-action
