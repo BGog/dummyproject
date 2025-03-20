@@ -52,6 +52,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: dummyproject
+  namespace: dummyproject
 spec:
   selector:
     app: dummyproject
@@ -63,7 +64,7 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: dummyproject
-  namespace: default
+  namespace: dummyproject
   annotations:
     kubernetes.io/ingress.class: traefik-external
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
