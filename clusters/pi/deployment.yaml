@@ -1,0 +1,95 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dummyproject
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dummyproject
+  namespace: dummyproject
+  labels:
+    app: dummyproject
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dummyproject
+  template:
+    metadata:
+      labels:
+        app: dummyproject
+    spec:
+      containers:
+      - name: dummyproject
+        image: hagrid.lab.printf.org/bgog/dummyproject:19769fe  # Will be updated by CD pipeline
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dummyproject
+spec:
+  selector:
+    app: dummyproject
+  ports:
+  - port: 80
+    targetPort: 8000
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: dummyproject
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+    # only add the next two if the app will be exposed on the internet
+    external-dns.alpha.kubernetes.io/hostname: dummyproject.printf.org
+    external-dns.alpha.kubernetes.io/target: ff0f0794-7fb8-48e1-ac6b-57ba6837263e.cfargotunnel.com
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`dummyproject.lab.printf.org`)  # Replace with your domain
+      kind: Rule
+      services:
+        - name: dummyproject
+          port: 80
+      middlewares:
+        - name: default-headers
+          namespace: default
+    # Only add if this app will be exposed on the internet
+    - match: Host(`dummyproject.printf.org`)  # Replace with your domain
+      kind: Rule
+      services:
+        - name: dummyproject
+          port: 80
+      middlewares:
+        - name: default-headers
+          namespace: default
+  tls:
+    secretName: dummyproject-tls
