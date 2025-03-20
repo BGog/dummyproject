@@ -34,6 +34,7 @@ jobs:
       #     echo "ctx: ${{ github.repositoryUrl }}#${{ github.ref }}#${{ github.sha }}"
       #     echo "$(ls -l)"
       #     echo "$(find .)"
+      - uses: actions/checkout@v4.1.1
       - name: Build and Push Image to docker registry with kaniko
         working-directory: ./app
         run: |
@@ -47,7 +48,7 @@ jobs:
           }
           EOF
 
-          /kaniko/executor --dockerfile="./app/Dockerfile" \
+          /kaniko/executor --dockerfile="Dockerfile" \
             --context="${{ github.repositoryUrl }}#${{ github.ref }}#${{ github.sha }}"  \
             --destination="hagrid.lab.printf.org/$DOCKER_IMAGE_NAME:$(echo ${GITHUB_SHA} | head  -c 7)" \
             ${{ env.KANIKO_CACHE_ARGS }} \
