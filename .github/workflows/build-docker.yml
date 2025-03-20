@@ -50,6 +50,14 @@ jobs:
       #packages: write # to push to GHCR, omit for other container registry. https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions#publishing-a-package-using-an-action
 
     steps:
+      - name: Generate build ID
+        id: prep
+        run: |
+            branch=${GITHUB_REF##*/}
+            sha=${GITHUB_SHA::8}
+            ts=$(date +%s)
+            echo "::set-output name=BUILD_ID::${branch}-${sha}-${ts}"
+
       - name: Build and Push Image to docker registry with kaniko
         run: |
           cat <<EOF > /kaniko/.docker/config.json
@@ -64,10 +72,12 @@ jobs:
 
           /kaniko/executor --dockerfile="./app/Dockerfile" \
             --context="${{ github.repositoryUrl }}#${{ github.ref }}#${{ github.sha }}"  \
-            --destination="hagrid.lab.printf.org/$DOCKER_IMAGE_NAME:$(echo ${GITHUB_SHA} | head  -c 7)" \
+            --destination="hagrid.lab.printf.org/$DOCKER_IMAGE_NAME:${{ steps.prep.outputs.BUILD_ID }}" \
             ${{ env.KANIKO_CACHE_ARGS }} \
             --push-retry 5 
         env: 
           GIT_USERNAME: ${{ github.actor }}
           GIT_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
           DOCKER_IMAGE_NAME: "bgog/dummyproject"
+
+# --destination="hagrid.lab.printf.org/$DOCKER_IMAGE_NAME:$(echo ${GITHUB_SHA} | head  -c 7)" \
