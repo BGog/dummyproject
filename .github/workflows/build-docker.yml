@@ -34,7 +34,7 @@ jobs:
       #     echo "ctx: ${{ github.repositoryUrl }}#${{ github.ref }}#${{ github.sha }}"
       #     echo "$(ls -l)"
       #     echo "$(find .)"
-      - uses: actions/checkout@v4.1.1
+      - uses: actions/checkout@v4
       
       - name: short commit sha
         id: commit_sha
