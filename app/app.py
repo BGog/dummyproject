@@ -1,6 +1,7 @@
 from flask import Flask, render_template, jsonify
 import time
 import datetime
+import socket
 
 app = Flask(__name__)
 start_time = time.time()
@@ -8,7 +9,8 @@ start_time = time.time()
 @app.route('/')
 def hello_world():
     uptime = datetime.timedelta(seconds=int(time.time() - start_time))
-    return render_template('index.html', uptime=uptime)
+    hostname = socket.gethostname()
+    return render_template('index.html', uptime=uptime, hostname=hostname)
 
 @app.route('/health')
 def health():

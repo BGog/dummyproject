@@ -1,14 +1,10 @@
-# build-with-kaniko.yml
-
-name: Build with kaniko
-
+name: Build Docker Image
 on:
   push:
-    branches: [ fred ]
-    # branches: [ "*" ]
-    # paths:
-    #   - "app/**"
-    #   - ".github/workflows/build-docker.yml"
+    branches: [ main ]
+    paths:
+      - "app/**"
+      - ".github/workflows/**"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -17,64 +13,45 @@ env:
   KANIKO_CACHE_ARGS: "--cache=true --cache-copy-layers=true --cache-ttl=24h"
 
 jobs:
-  test:
+  run-tests:
     name: "Run Tests"
-    runs-on: k8s-test-runner #ubuntu-latest
+    runs-on: k8s-test-runner
     container:
       image: ghcr.io/actions/actions-runner:latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v3
     
-    # - name: Set up Python
-    #   uses: actions/setup-python@v4
-    #   with:
-    #     python-version: '3.11'
-    #     architecture: 'arm64'
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        architecture: 'arm64'
         
-    # - name: Install dependencies
-    #   working-directory: ./app
-    #   run: |
-    #     python -m pip install --upgrade pip
-    #     pip install -r requirements.txt
+    - name: Install dependencies
+      working-directory: ./app
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
         
-    # - name: Run tests
-    #   working-directory: ./app
-    #   run: |
-    #     python -m pytest tests/
+    - name: Run tests
+      working-directory: ./app
+      run: |
+        python -m pytest tests/
 
   build-to-localrepo:
-    name: "Build and Push Image"
-    needs: [test]
+    name: "Build Docker Image"
+    needs: run-tests
     runs-on: k8s-test-runner
     container:
-      image: gcr.io/kaniko-project/executor:debug #v1.23.2-debug # the kaniko image
+      image: gcr.io/kaniko-project/executor:v1.23.2-debug # the kaniko image
     permissions:
       contents: read # read the repository
       #packages: write # to push to GHCR, omit for other container registry. https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions#publishing-a-package-using-an-action
 
     steps:
-      - name: Look at files
-        working-directory: ./app
-        run: |
-          echo "curdir: $PWD"
-          echo "$(ls -l)"
-          echo "$(find /__e/node20)"
-      - uses: actions/checkout@v4
-      
-      # - name: short commit sha
-      #   id: commit_sha
-      #   run: echo "sha_short=$(git log -1 --pretty=%h)" >> $GITHUB_OUTPUT
-
-      # - name: print commit sha
-      #   run: echo ${{ steps.commit_sha.outputs.sha_short }}
-        
       - name: Build and Push Image to docker registry with kaniko
-        #working-directory: ./app
-
         run: |
-          echo "$(find /__w/dummyproject)"
-          echo "--------------------"
           cat <<EOF > /kaniko/.docker/config.json
           {
             "auths": {
@@ -85,16 +62,12 @@ jobs:
           }
           EOF
 
-          /kaniko/executor --dockerfile="Dockerfile" \
+          /kaniko/executor --dockerfile="./app/Dockerfile" \
             --context="${{ github.repositoryUrl }}#${{ github.ref }}#${{ github.sha }}"  \
             --destination="hagrid.lab.printf.org/$DOCKER_IMAGE_NAME:$(echo ${GITHUB_SHA} | head  -c 7)" \
             ${{ env.KANIKO_CACHE_ARGS }} \
-            --push-retry 5
-
+            --push-retry 5 
         env: 
           GIT_USERNAME: ${{ github.actor }}
           GIT_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
           DOCKER_IMAGE_NAME: "bgog/dummyproject"
-
-# --destination="hagrid.lab.printf.org/$DOCKER_IMAGE_NAME:$(echo ${GITHUB_SHA} | head  -c 7)" \
-# --context="${{ github.repositoryUrl }}#${{ github.ref }}#${{ github.sha }}"  \
