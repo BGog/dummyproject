@@ -15,7 +15,7 @@ env:
 jobs:
   run-tests:
     name: "Run Tests"
-    runs-on: k8s-test-runner
+    runs-on: dummyproject-test-runner
     container:
       image: ghcr.io/actions/actions-runner:latest
 
@@ -42,7 +42,7 @@ jobs:
   build-to-localrepo:
     name: "Build Docker Image"
     needs: run-tests
-    runs-on: k8s-test-runner
+    runs-on: dummyproject-test-runner
     container:
       image: gcr.io/kaniko-project/executor:v1.23.2-debug # the kaniko image
     permissions:

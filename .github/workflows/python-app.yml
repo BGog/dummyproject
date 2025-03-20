@@ -1,17 +1,17 @@
 name: Run Tests
 on:
-  push:
-    branches: [ "*" ]
-    paths:
-      - "app/**"
-      - ".github/workflows/**"
+  # push:
+  #   branches: [ "*" ]
+  #   paths:
+  #     - "app/**"
+  #     - ".github/workflows/**"
   pull_request:
     branches: [ main ]
 
 jobs:
   run-tests:
     name: "Run Tests"
-    runs-on: k8s-test-runner
+    runs-on: dummyproject-test-runner
     container:
       image: ghcr.io/actions/actions-runner:latest
 
