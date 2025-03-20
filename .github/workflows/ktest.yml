@@ -7,7 +7,7 @@ on:
     branches: [ "*" ]
     paths:
       - "app/**"
-      - ".github/workflows/test-kaniko.yml"
+      - ".github/workflows/ktest.yml"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
