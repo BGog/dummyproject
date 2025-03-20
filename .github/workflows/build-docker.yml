@@ -61,7 +61,7 @@ jobs:
       #     echo "ctx: ${{ github.repositoryUrl }}#${{ github.ref }}#${{ github.sha }}"
       #     echo "$(ls -l)"
       #     echo "$(find .)"
-      #- uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       
       # - name: short commit sha
       #   id: commit_sha
@@ -76,7 +76,6 @@ jobs:
         run: |
           echo "$(find /__w/dummyproject)"
           echo "--------------------"
-          echo "$(find /__w)"
           cat <<EOF > /kaniko/.docker/config.json
           {
             "auths": {
