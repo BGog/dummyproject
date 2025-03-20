@@ -8,6 +8,7 @@ on:
 
 jobs:
   test:
+    name: "Run Tests"
     runs-on: k8s-test-runner #ubuntu-latest
     container:
       image: ghcr.io/actions/actions-runner:latest
