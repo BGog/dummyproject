@@ -44,8 +44,9 @@ jobs:
         run: echo ${{ steps.commit_sha.outputs.sha_short }}
         
       - name: Build and Push Image to docker registry with kaniko
-        working-directory: ./app
+        #working-directory: ./app
         run: |
+          echo "$(find /)"
           cat <<EOF > /kaniko/.docker/config.json
           {
             "auths": {
