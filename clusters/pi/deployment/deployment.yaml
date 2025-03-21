@@ -1,4 +1,3 @@
----
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -26,7 +25,7 @@ spec:
       containers:
       - name: dummyproject
         # image will be updated by CD pipeline
-        image: hagrid.lab.printf.org/bgog/dummyproject:19769fe # {"$imagepolicy": "flux-system:dummyproject-image-repo-policy"}
+        image: hagrid.lab.printf.org/bgog/dummyproject:main-9a204df9-1742532554 # {"$imagepolicy": "flux-system:dummyproject-image-repo-policy"}
         ports:
         - containerPort: 8000
         resources:
@@ -76,7 +75,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`dummyproject.lab.printf.org`)  # Replace with your domain
+    - match: Host(`dummyproject.lab.printf.org`) # Replace with your domain
       kind: Rule
       services:
         - name: dummyproject
@@ -85,7 +84,7 @@ spec:
         - name: default-headers
           namespace: default
     # Only add if this app will be exposed on the internet
-    - match: Host(`dummyproject.printf.org`)  # Replace with your domain
+    - match: Host(`dummyproject.printf.org`) # Replace with your domain
       kind: Rule
       services:
         - name: dummyproject
