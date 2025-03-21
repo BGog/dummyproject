@@ -3,7 +3,7 @@ apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageUpdateAutomation
 metadata:
   name: dummyproject-image-update
-  namespace: dummyproject
+  namespace: flux-system
 spec:
   git:
     checkout:
