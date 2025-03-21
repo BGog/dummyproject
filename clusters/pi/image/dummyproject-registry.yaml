@@ -1,0 +1,11 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: dummyproject
+  namespace: flux-system
+spec:
+  image: bgog/dummyproject
+  interval: 1m0s
+  secretRef:
+    name: container-registry-cred
