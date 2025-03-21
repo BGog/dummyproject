@@ -26,7 +26,7 @@ spec:
       containers:
       - name: dummyproject
         # image will be updated by CD pipeline
-        image: hagrid.lab.printf.org/bgog/dummyproject:19769fe
+        image: hagrid.lab.printf.org/bgog/dummyproject:19769fe # {"$imagepolicy": "flux-system:dummyproject-image-repo-policy"}
         ports:
         - containerPort: 8000
         resources:
