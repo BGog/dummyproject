@@ -25,7 +25,8 @@ spec:
     spec:
       containers:
       - name: dummyproject
-        image: hagrid.lab.printf.org/bgog/dummyproject:19769fe  # Will be updated by CD pipeline
+        # image will be updated by CD pipeline
+        image: hagrid.lab.printf.org/bgog/dummyproject:19769fe
         ports:
         - containerPort: 8000
         resources:

@@ -57,7 +57,6 @@ jobs:
             sha=${GITHUB_SHA::8}
             ts=$(date +%s)
             echo "BUILD_ID=${branch}-${sha}-${ts}" >> "$GITHUB_OUTPUT"
-##echo "::set-output name=BUILD_ID::${branch}-${sha}-${ts}"
             
       - name: Build and Push Image to docker registry with kaniko
         run: |
