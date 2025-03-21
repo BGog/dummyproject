@@ -5,7 +5,7 @@ metadata:
   name: dummyproject
   namespace: dummyproject
 spec:
-  image: bgog/dummyproject
+  image: hagrid.lab.printf.org/bgog/dummyproject
   interval: 1m0s
   secretRef:
     name: container-registry-cred
