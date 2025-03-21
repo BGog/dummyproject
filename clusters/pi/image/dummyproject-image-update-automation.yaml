@@ -1,0 +1,26 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageUpdateAutomation
+metadata:
+  name: dummyproject-image-update
+  namespace: dummyproject
+spec:
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: '{{range .Changed.Changes}}{{print .OldValue}} -> {{println
+        .NewValue}}{{end}}'
+    push:
+      branch: main
+  interval: 30m0s
+  sourceRef:
+    kind: GitRepository
+    name: dummyproject-git
+  update:
+    path: ./clusters/pi
+    strategy: Setters
