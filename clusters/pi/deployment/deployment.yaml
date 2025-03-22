@@ -71,7 +71,7 @@ metadata:
     # only add the next two if the app will be exposed on the internet
     external-dns.alpha.kubernetes.io/hostname: dummyproject.printf.org
     external-dns.alpha.kubernetes.io/target: ff0f0794-7fb8-48e1-ac6b-57ba6837263e.cfargotunnel.com
-    gethomepage.dev/enabled: "true"
+    gethomepage.dev/enabled: "false"
     gethomepage.dev/href: "https://dummyproject.printf.org"
     gethomepage.dev/description: DummyProject
     gethomepage.dev/group: Apps
