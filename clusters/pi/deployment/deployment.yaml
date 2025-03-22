@@ -65,6 +65,8 @@ kind: IngressRoute
 metadata:
   name: dummyproject
   namespace: dummyproject
+  labels:
+    app: dummyproject
   annotations:
     kubernetes.io/ingress.class: traefik-external
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
