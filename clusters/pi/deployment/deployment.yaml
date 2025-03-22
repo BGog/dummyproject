@@ -71,17 +71,17 @@ metadata:
     # only add the next two if the app will be exposed on the internet
     external-dns.alpha.kubernetes.io/hostname: dummyproject.printf.org
     external-dns.alpha.kubernetes.io/target: ff0f0794-7fb8-48e1-ac6b-57ba6837263e.cfargotunnel.com
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/description: DummyProject
-    gethomepage.dev/group: Apps
-    gethomepage.dev/icon: emby.png
-    gethomepage.dev/app: emby-app # optional, may be needed if app.kubernetes.io/name != ingress metadata.name
-    gethomepage.dev/name: Emby
-    gethomepage.dev/widget.type: "emby"
-    gethomepage.dev/widget.url: "https://dummyproject.printf.org"
-    gethomepage.dev/pod-selector: ""
-    gethomepage.dev/weight: 10 # optional
-    gethomepage.dev/instance: "public" # optional
+    # gethomepage.dev/enabled: "true"
+    # gethomepage.dev/description: DummyProject
+    # gethomepage.dev/group: Apps
+    # gethomepage.dev/icon: emby.png
+    # gethomepage.dev/app: emby-app # optional, may be needed if app.kubernetes.io/name != ingress metadata.name
+    # gethomepage.dev/name: Emby
+    # gethomepage.dev/widget.type: "emby"
+    # gethomepage.dev/widget.url: "https://dummyproject.printf.org"
+    # gethomepage.dev/pod-selector: ""
+    # gethomepage.dev/weight: 10 # optional
+    # gethomepage.dev/instance: "public" # optional
 spec:
   entryPoints:
     - websecure
