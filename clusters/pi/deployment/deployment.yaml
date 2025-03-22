@@ -12,6 +12,7 @@ metadata:
   namespace: dummyproject
   labels:
     app: dummyproject
+    app.kubernetes.io/name: dummyproject
 spec:
   replicas: 2
   selector:
