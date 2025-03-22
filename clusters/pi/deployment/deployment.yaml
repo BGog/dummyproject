@@ -75,7 +75,7 @@ metadata:
     gethomepage.dev/href: "https://dummyproject.printf.org"
     gethomepage.dev/description: DummyProject
     gethomepage.dev/group: Apps
-    gethomepage.dev/icon: emby.png
+    gethomepage.dev/icon: 'mdi-book-arrow-down-outline-#bb2d2d'
     gethomepage.dev/app: dummyproject # optional, may be needed if app.kubernetes.io/name != ingress metadata.name
     gethomepage.dev/name: dummyproject
     #gethomepage.dev/widget.type: "emby"
