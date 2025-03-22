@@ -93,7 +93,7 @@ metadata:
     #gethomepage.dev/instance: "public" # optional
     gethomepage.dev/siteMonitor: "https://dummyproject.printf.org"
     #gethomepage.dev/siteMonitorInterval: "30s"
-    gethomepage.dev/statusStyle: "dot"
+    #gethomepage.dev/statusStyle: "dot"
     
 spec:
   entryPoints:
