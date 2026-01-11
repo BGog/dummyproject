@@ -26,7 +26,7 @@ spec:
       containers:
       - name: dummyproject
         # image will be updated by CD pipeline
-        image: hagrid.lab.printf.org/bgog/dummyproject:main-2ca080ef-1742533433 # {"$imagepolicy": "flux-system:dummyproject-image-repo-policy"}
+        image: hagrid.lab.printf.org/bgog/dummyproject:main-e3009715-1768116302 # {"$imagepolicy": "flux-system:dummyproject-image-repo-policy"}
         ports:
         - containerPort: 8000
         resources:
@@ -94,7 +94,6 @@ metadata:
     gethomepage.dev/siteMonitor: "https://dummyproject.printf.org"
     #gethomepage.dev/siteMonitorInterval: "30s"
     #gethomepage.dev/statusStyle: "dot"
-    
 spec:
   entryPoints:
     - websecure
