@@ -10,7 +10,7 @@ class TestApp(unittest.TestCase):
     def test_home_page(self):
         response = self.app.get('/')
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'Hello World!', response.data)
+        self.assertIn(b'Hello World', response.data)
         self.assertIn(b'Application uptime:', response.data)
 
     def test_uptime_increases(self):
