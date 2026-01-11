@@ -74,6 +74,7 @@ jobs:
             --context="${{ github.repositoryUrl }}#${{ github.ref }}#${{ github.sha }}"  \
             --destination="hagrid.lab.printf.org/$DOCKER_IMAGE_NAME:${{ steps.prep.outputs.BUILD_ID }}" \
             ${{ env.KANIKO_CACHE_ARGS }} \
+            --skip-tls-verify-registry=hagrid.lab.printf.org \
             --push-retry 5 
         env: 
           GIT_USERNAME: ${{ github.actor }}
