@@ -70,10 +70,10 @@ metadata:
     app: dummyproject
   annotations:
     kubernetes.io/ingress.class: traefik-external
-    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+    external-dns.kubernetes.io/cloudflare-proxied: "true"
     # only add the next two if the app will be exposed on the internet
-    external-dns.alpha.kubernetes.io/hostname: dummyproject.printf.org
-    external-dns.alpha.kubernetes.io/target: ff0f0794-7fb8-48e1-ac6b-57ba6837263e.cfargotunnel.com
+    external-dns.kubernetes.io/hostname: dummyproject.printf.org
+    external-dns.kubernetes.io/target: ff0f0794-7fb8-48e1-ac6b-57ba6837263e.cfargotunnel.com
     # gethomepage.dev/enabled: "true"
     # gethomepage.dev/description: Dynamically Detected Homepage
     # gethomepage.dev/group: Apps
